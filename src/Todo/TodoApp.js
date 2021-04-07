@@ -1,19 +1,21 @@
-import React, { useState } from 'react'; 
-import Paper from '@material-ui/core/Paper';
-import AppBar from '@material-ui/core/AppBar';
-import ToolBar from '@material-ui/core/ToolBar';
-import Typography from '@material-ui/core/Typography';
+import React, { useState } from 'react';
+import { Paper, AppBar, Toolbar, Typography, Grid } from '@material-ui/core';
 
 import TodoList from './TodoList/TodoList';
+import TodoForm from './TodoForm/TodoForm';
 
 function TodoApp() {
   const initalTodos = [
-    {id: 1, task: 'Make a todo list', completed: false },
-    {id: 2, task: 'Play chess', completed: true },
-    {id: 3, task: 'Finish 100 years of solitude', completed: false },
+    { id: 1, task: 'Make a todo list', completed: false },
+    { id: 2, task: 'Play chess', completed: true },
+    { id: 3, task: 'Finish 100 years of solitude', completed: false },
   ];
 
   const [todos, setTodos] = useState(initalTodos);
+
+  const addTodo = (val) => {
+    setTodos([...todos, { id: 4, task: val, completed: false }])
+  }
 
   return (
     <Paper style={{
@@ -22,12 +24,18 @@ function TodoApp() {
       height: '100vh',
       backgroundColor: '#f0f0f0'
     }}>
-      <AppBar color='primary' position='static' style={{height: '4rem'}}>
-        <ToolBar>
+      <AppBar color='primary' position='static' style={{ height: '4rem' }}>
+        <Toolbar>
           <Typography color='inherit'>Todos</Typography>
-        </ToolBar>
+        </Toolbar>
       </AppBar>
-      <TodoList tasks={todos} ></TodoList>
+      <Grid container justify='center'>
+        <Grid item xs={11} md={8} lg={6}>
+
+          <TodoList tasks={todos} ></TodoList>
+          <TodoForm addTodo={addTodo}></TodoForm>
+        </Grid>
+      </Grid>
     </Paper>
   )
 }
